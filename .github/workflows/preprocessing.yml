@@ -2,10 +2,14 @@ name: Preprocessing Pipeline
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'Buy_Now_Pay_Later_BNPL_CreditRisk_Dataset.csv'
       - 'preprocessing/automate_Raditfiransah.py'
   pull_request:
+    branches:
+      - main
     paths:
       - 'Buy_Now_Pay_Later_BNPL_CreditRisk_Dataset.csv'
       - 'preprocessing/automate_Raditfiransah.py'
