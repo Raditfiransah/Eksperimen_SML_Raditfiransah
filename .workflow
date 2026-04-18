@@ -1,0 +1,41 @@
+name: Preprocessing Pipeline
+
+on:
+  push:
+    paths:
+      - 'Buy_Now_Pay_Later_BNPL_CreditRisk_Dataset.csv'
+      - 'preprocessing/automate_Raditfiransah.py'
+  pull_request:
+    paths:
+      - 'Buy_Now_Pay_Later_BNPL_CreditRisk_Dataset.csv'
+      - 'preprocessing/automate_Raditfiransah.py'
+  workflow_dispatch:
+
+jobs:
+  preprocess:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.7'
+
+      - name: Install dependencies
+        run: pip install pandas numpy scikit-learn imbalanced-learn
+
+      - name: Run preprocessing
+        working-directory: preprocessing
+        run: |
+          python automate_Raditfiransah.py \
+            --input ../Buy_Now_Pay_Later_BNPL_CreditRisk_Dataset.csv \
+            --output ./Buy_Now_Pay_Later_BNPL_CreditRisk_Dataset_Preprocessing
+
+      - name: Upload hasil preprocessing
+        uses: actions/upload-artifact@v4
+        with:
+          name: preprocessed-data
+          path: preprocessing/Buy_Now_Pay_Later_BNPL_CreditRisk_Dataset_Preprocessing/
